@@ -1,0 +1,88 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">{{ title }}</h4>
+  <button
+    type="button"
+    class="close pull-right"
+    aria-label="Close"
+    (click)="modalRef?.hide()"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div>
+    <span *ngIf="isEdit"
+      ><strong>Note: </strong>You cannot edit ID in edit mode.</span
+    >
+  </div>
+  <br />
+  <form [formGroup]="contactForm" data-toggle="validator" role="form">
+    <div class="form-group">
+      <label class="control-label" required>First Name</label>
+      <input
+        formControlName="firstName"
+        type="text"
+        class="form-control"
+        id="firstName"
+        placeholder="First Name"
+      />
+      <span *ngIf="contactForm.get('firstName').hasError('required')">
+        First Name is required.
+      </span>
+    </div>
+    <div class="form-group">
+      <label class="control-label" required>Last Name</label>
+      <input
+        formControlName="lastName"
+        type="text"
+        class="form-control"
+        id="lastName"
+        placeholder="Last Name"
+      />
+      <span *ngIf="contactForm.get('lastName').hasError('required')">
+        Last Name is required.
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label" required>Mobile Number</label>
+      <input
+        formControlName="phone"
+        type="text"
+        class="form-control"
+        id="mobileNumber"
+        placeholder="Mobile Number"
+      />
+      <span *ngIf="contactForm.get('phone').hasError('required')">
+        Mobile Number is required.
+      </span>
+    </div>
+    <div class="form-group">
+      <label class="control-label" required>ID</label>
+      <input
+        formControlName="id"
+        type="number"
+        class="form-control"
+        id="contactId"
+        placeholder="ID"
+      />
+      <span *ngIf="contactForm.get('id').hasError('required')">
+        Id is required.
+      </span>
+    </div>
+  </form>
+  <span *ngIf="!isEdit && duplicateIdErrorMsg">{{ duplicateIdErrorMsg }}</span>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger" (click)="modalRef?.hide()">
+    CANCEL
+  </button>
+  <button
+    type="button"
+    class="btn btn-success"
+    (click)="validateContactId(isEdit)"
+    [disabled]="contactForm.invalid"
+  >
+    {{ isEdit ? "EDIT" : "ADD" }}
+  </button>
+</div>
